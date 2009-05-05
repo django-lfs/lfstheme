@@ -1,0 +1,36 @@
+{% extends "page/page_base.html" %}
+{% load i18n %}
+{% load lfs_tags %}
+
+{% block after-tabs %}
+    <ul class="breadcrumbs">
+        <li>{% trans 'You are here:' %}</li>
+        <li>
+            <a href="{% url lfs_shop_view %}">
+                {% trans 'Home' %}</a> &gt;
+        </li>
+        <li>
+            <a href="{% url lfs_pages %}">{% trans 'Information' %}</a>
+             &gt;
+        </li>
+        <li>
+            {{page.title}}
+        </li>
+    </ul>    
+{% endblock %}
+
+{% block content %}
+
+    <h1 class="page-title">
+        {{page.title}}
+    </h1>
+    <div>
+        {{page.body|safe}}
+    </div>
+    
+    {% if page.file %}
+        <a href="{{page.file.url}}">
+            Download
+        </a>
+    {% endif %}
+{% endblock %}

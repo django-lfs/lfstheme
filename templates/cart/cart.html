@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block section %}cart without-padding{% endblock %}
+{% block left-slot-wrapper %}{% endblock %}
+{% block right-slot-wrapper %}{% endblock %}
+
+
+{% block after-tabs %}
+    <ul class="breadcrumbs">
+        <li>{% trans 'You are here:' %}</li>
+        <li>
+            <a href="{% url lfs_shop_view %}">
+                {% trans 'Home' %}</a>
+        </li>
+         &gt; {% trans 'Cart' %}
+    </ul>
+{% endblock %}
+
+{% block content %}
+    <div id="cart-inline">
+        {{cart_inline}}
+    </div>
+{% endblock %}

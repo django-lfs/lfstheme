@@ -1,0 +1,10 @@
+{% extends "catalog/category_base.html" %}
+{% load lfs_tags %}
+
+{% block after-tabs %}
+    {% category_breadcrumbs category %}
+{% endblock %}
+
+{% block content %}
+    {{category_inline|safe}}
+{% endblock %}

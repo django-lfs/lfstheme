@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load lfs_tags %}
+
+{% block section %}added-to-cart{% endblock %}
+{% block left-slot-wrapper %}{% endblock %}
+{% block right-slot-wrapper %}{% endblock %}
+
+{% block content %}
+    {% if plural %}
+        <h1>{% trans 'This products have been added to cart' %}</h1>
+    {% else %}
+        <h1>{% trans 'This product has been added to cart' %}</h1>
+    {% endif %}
+    
+    <div id="cart-items">
+        {{cart_items}}
+    </div>
+    
+    {% if product_accessories %}
+        <h3>{% trans 'Accessories' %}</h3>
+        <table class="accessories lfs-default">
+            <tr>
+                <th>
+                    {% trans 'Name' %}
+                </th>
+                <th class="number">
+                    {% trans 'Quantity' %}
+                </th>
+                <th class="number">
+                    {% trans 'Price' %}
+                </th>
+                <th class="number">
+                    {% trans 'Total' %}
+                </th>
+                <th></th>
+            </tr>
+            {% for product_accessory in product_accessories %}
+                <tr>
+                    <td>
+                        <a href="{{product_accessory.accessory.get_absolute_url}}">
+                            {{product_accessory.accessory.name}}
+                        </a>                    
+                    </td>
+                    <td class="number">
+                        {{product_accessory.quantity|quantity}}
+                    </td>
+                    <td class="number">
+                        {{product_accessory.accessory.get_price|currency}}
+                    </td>
+                    <td class="number">
+                        {{product_accessory.get_price|currency}}
+                    </td>
+                    <td class="right">
+                        <a class="add-accessory-link"
+                           href="{% url lfs_add_accessory_to_cart product_accessory.accessory.id product_accessory.quantity %}">Add</a>
+                    </td>
+                </tr>    
+            {% endfor %}
+        </table>        
+    {% endif %}
+
+    <div class="buttons">
+        <a href="{{shopping_url}}">
+           <img src="{{MEDIA_URL}}lfstheme/img/button_shopping.jpg"
+                alt="Go on shopping" />
+        </a>
+        <a href="{% url lfs.cart.views.cart %}">
+           <img src="{{MEDIA_URL}}lfstheme/img/button_cart.jpg"
+                alt="Go to cart" />
+        </a>
+        <a href="{% url lfs_checkout_dispatcher %}">
+           <img src="{{MEDIA_URL}}lfstheme/img/button_checkout.jpg"
+                alt="Checkout" />
+        </a>                       
+    </div>
+
+{% endblock %}

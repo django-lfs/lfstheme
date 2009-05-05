@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load lfs_tags %}
+{% load lfs_page_tags %}
+
+{% block after-tabs %}
+    <ul class="breadcrumbs">
+        <li>{% trans 'You are here:' %}</li>
+        <li>            
+            {% trans 'Home' %}
+        </li>
+    </ul>    
+{% endblock %}
+{% block left-slot %}
+    {% categories_portlet %}
+    {% pages_portlet %}
+{% endblock %}
+
+{% block right-slot %}
+    {% cart_portlet %}
+{% endblock %}

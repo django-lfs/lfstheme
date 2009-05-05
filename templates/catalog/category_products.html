@@ -1,0 +1,90 @@
+{% load i18n lfs_tags %}
+
+{% if category.static_block %}
+    <div class="static-block">
+        {{category.static_block.html|safe}}
+    </div>
+{% endif %}
+
+<h1>
+    {{category.name}}
+</h1>
+
+<div class="description">
+    {{category.description|safe}}
+</div>
+
+<div class="products-navigation">
+    {% if show_pages %}
+        {% if previous_url %}
+            <a href="{{previous_url}}">&lt;&lt; {% trans 'Previous page' %}</a>
+        {% else %}
+            &lt;&lt; {% trans 'Previous page' %}
+        {% endif %} 
+    
+        {% if pages %}
+            - 
+        {% endif %}
+        
+        {% for page in pages %}        
+            <a class="{% if page.selected%}emphasized{% endif %}"
+               href="{% url lfs_category category.slug page.start %}">
+                {{page.name}}
+            </a>                
+        {% endfor %}    
+        
+        ({{amount_of_products}} {% trans 'Products' %})
+        
+        {% if pages %}
+            - 
+        {% endif %}
+    
+        {% if next_url %}
+            <a href="{{next_url}}">{% trans 'Next page' %} &gt;&gt;</a>
+        {% else %}
+            {% trans 'Next page' %} &gt;&gt;
+        {% endif %}        
+    {% endif %}
+</div>    
+
+{% sorting %}
+
+<div id="products">
+    <table class="lfs-default">
+        {% for col in products %}
+        <tr class="product-row">
+            {% for product in col %}
+                <td class="product-data"
+                    onclick="window.location='{% url lfs.catalog.views.product_view product.slug %}'">
+                    <div class="product-image">
+                        <a href="{% url lfs.catalog.views.product_view product.slug %}">
+                            <img alt="{{product.name}}"
+                                 src="{{product.get_image.url_100x100}}" />
+                        </a>
+                    </div>
+                    
+                    <div class="product-title">{{product.name}}</div>
+                
+                    <div class="product-price">
+                        {% if product.for_sale %}
+                           <span class="for-sale-standard-price">{{product.price|currency}}</span>
+                           <span class="for-sale-price">{{product.for_sale_price|currency}}*</span>        
+                        {% else %}
+                            <span class="standard-price">{{product.price|currency}}*</span>
+                        {% endif %}
+                        <div class="price-disclaimer">
+                            *inkl. MwSt. zzgl. Versand
+                        </div>                                    
+                    </div>                    
+                    <div class="details-button">
+                        <a href="{% url lfs_product product.slug %}">
+                            <img src="{{ MEDIA_URL }}lfstheme/img/button_details.jpg" 
+                                 alt="{% trans 'Details' %}" />
+                        </a> 
+                    </div>                   
+                </td>
+            {% endfor %}
+        </tr>        
+        {% endfor %}    
+    </table>
+</div>

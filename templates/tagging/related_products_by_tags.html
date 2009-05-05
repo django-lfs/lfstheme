@@ -1,0 +1,6 @@
+{% load i18n %}
+<h1 class="reviews">{% trans 'Related products by tag' %}</h1>
+{% for product in related_products %}
+    <a href="{{product.get_absolute_url}}">
+        {{product.name}}</a>
+{% endfor %}

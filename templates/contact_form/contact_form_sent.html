@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Contact form" %}{% endblock %}
+{% block section %}without-padding{% endblock %}
+{% block left-slot-wrapper%}{% endblock %}
+{% block right-slot-wrapper%}{% endblock %}
+
+{% block content %}
+    <h1>{% trans 'Contact form' %}</h1>    
+    <p>
+        {% trans 'Thank you for your message. We will get back to you soon.' %}
+    </p>
+    
+    <a href="{% url lfs_shop_view %}">
+        <img src="{{ MEDIA_URL }}lfstheme/img/button_shopping.jpg" 
+             alt="{% trans 'Go on shopping' %}" />
+{% endblock %}

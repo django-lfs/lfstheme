@@ -1,0 +1,49 @@
+{% extends "catalog/product_base.html" %}
+{% load i18n %}
+{% load lfs_tags %}
+{% load lfs_tagging_tags %}
+{% load reviews_tags %}
+{% load tagging_tags %}
+
+{% block content %}    
+    
+    {% product_navigation product %}
+    
+    <div class="overview">
+        <a href="{{current_category.get_absolute_url}}">
+           {% trans 'Back to overview' %}
+        </a>
+    </div>
+    
+    <div id="product-inline">
+        {{product_inline|safe}}
+    </div>
+    
+    <a name="reviews"></a>
+    <h1 class="reviews">{% trans 'Reviews' %}</h1>
+
+    {% reviews_for_instance product %}
+
+    {% tags_for_object product as tags %}        
+    {% if tags %}
+        <h1 class="reviews">{% trans 'Tags' %}</h1>
+        {% for tag in tags %}
+            <a href="{% url product_tag_detail tag.name %}">
+                {{tag}}</a> 
+        {% endfor %}        
+    {% endif %}
+
+    {% tag_cloud_for_model catalog.Product as cloud with steps=6 min_count=1 distribution=log %}    
+    {% if cloud %}
+        <h1 class="reviews">{% trans 'Tag cloud' %}</h1>
+        <div class="tag-cloud">
+            {% for tag in cloud %}
+                <a href="{% url product_tag_detail tag.name %}" style="font-size:1{{tag.font_size}}px">
+                    {{tag}}</a> 
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    {% related_products_by_tags product.id %}
+
+{% endblock %}

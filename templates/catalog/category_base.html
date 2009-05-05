@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load lfs_tags lfs_page_tags lfs_marketing_tags %}
+
+{% block section %}category{% endblock %}
+
+{% block head %}
+    {% if category.get_meta_keywords %}
+        <meta name="keywords" content="{{category.get_meta_keywords}}" />
+    {% endif %}
+    {% if category.get_meta_description %}
+        <meta name="description" content="{{category.get_meta_description}}" />
+    {% endif %}
+{% endblock %}
+
+{% block left-slot %}
+    {% categories_portlet category %}
+    {% filter_navigation category %}
+{% endblock %}
+
+{% block right-slot %}
+    {% cart_portlet %}
+    {% topseller_for_category_portlet category 5 %}
+{% endblock %}
