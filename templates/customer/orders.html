@@ -36,7 +36,7 @@
                 <tr>
                     <td>
                         <a href="{% url lfs_my_order order.id %}">
-                            {{order.created}}
+                            {{order.created|date:_("DATETIME_FORMAT")}}
                         </a>
                     
                     </td>

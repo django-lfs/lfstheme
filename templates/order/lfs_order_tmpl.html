@@ -17,7 +17,7 @@
             {% trans 'Date' %}:
         </td>
         <td>
-            {{current_order.created}}
+            {{current_order.created|date:_("DATETIME_FORMAT")}}
         </td>
     </tr>
     <tr>
