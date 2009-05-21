@@ -1,5 +1,8 @@
 {% extends "base.html" %}
-{% load lfs_tags lfs_page_tags lfs_marketing_tags %}
+{% load lfs_tags  %}
+{% load lfs_page_tags %}
+{% load lfs_marketing_tags %}
+{% load portlets_tags %}
 
 {% block section %}category{% endblock %}
 
@@ -15,9 +18,11 @@
 {% block left-slot %}
     {% categories_portlet category %}
     {% filter_navigation category %}
+    {% portlet_slot 'Left' category %}    
 {% endblock %}
 
 {% block right-slot %}
     {% cart_portlet %}
     {% topseller_for_category_portlet category 5 %}
+    {% portlet_slot 'Right' category %}
 {% endblock %}

@@ -2,6 +2,7 @@
 {% load lfs_tags %}
 {% load lfs_page_tags %}
 {% load lfs_tagging_tags %}
+{% load portlets_tags %}
 
 {% block title %}
     {{product.name}}
@@ -22,6 +23,7 @@
     {% categories_portlet %}
     {% pages_portlet %}
     {% recent_products_portlet %}
+    {% portlet_slot 'Left' product %}
 {% endblock %}
 
 {% block after-tabs %}
@@ -29,8 +31,8 @@
 {% endblock %}
 
 {% block right-slot %}
-    {% cart_portlet %}
     {% related_products_portlet product.id %}
+    {% portlet_slot 'Right' product %}    
 {% endblock %}
 
 {# {% block footer %} #}
