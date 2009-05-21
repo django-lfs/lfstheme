@@ -4,8 +4,14 @@
 <div class="cart-portlet portlet">
 
     <div class="portlet-header">
-        <a href="{% url lfs.cart.views.cart %}"
-           title="{% trans 'Go to cart' %}">{{ title }}
+        
+        {% if title %}
+            <a href="{% url lfs.cart.views.cart %}"
+               title="{% trans 'Go to cart' %}">{{ title }}
+        {% else %}
+            {% trans 'Cart' %}    
+        {% endif %}
+
         <img src="{{MEDIA_URL}}lfstheme/img/cart.png"
              alt="{% trans 'Cart' %}" />
         </a>
