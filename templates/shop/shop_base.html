@@ -2,20 +2,23 @@
 {% load i18n %}
 {% load lfs_tags %}
 {% load lfs_page_tags %}
+{% load portlets_tags %}
 
 {% block after-tabs %}
     <ul class="breadcrumbs">
         <li>{% trans 'You are here:' %}</li>
-        <li>            
+        <li>
             {% trans 'Home' %}
         </li>
-    </ul>    
+    </ul>
 {% endblock %}
 {% block left-slot %}
     {% categories_portlet %}
     {% pages_portlet %}
+    {% portlet_slot 'Left' shop %}
 {% endblock %}
 
 {% block right-slot %}
     {% cart_portlet %}
+    {% portlet_slot 'Right' shop %}
 {% endblock %}
