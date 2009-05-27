@@ -6,17 +6,17 @@
         </div>
         <div class="portlet-body">
             {% for page in pages %}
-                <div class="portlet-item">
+                <div class="portlet-item {% if forloop.last %}last{% endif %}">
                     <a href="{{page.get_absolute_url}}">
                         {{page.title}}
                     </a>
                 </div>
-            {% endfor %}        
+            {% endfor %}
         </div>
         <div class="portlet-footer">
             <a href="{% url lfs_pages %}">
                 {% trans 'More information' %}
             </a>
-        </div>    
-{% endif %} 
-</div>    
+        </div>
+{% endif %}
+</div>
