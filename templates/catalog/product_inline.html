@@ -159,7 +159,7 @@
                     </td>
                     <td>
                         <a href="{{ product_accessory.accessory.get_absolute_url }}">
-                            {{ product_accessory.accessory.name }}
+                            {{ product_accessory.accessory.name|truncatewords_html:5 }}
                         </a>
                     </td>
                     <td class="number">
