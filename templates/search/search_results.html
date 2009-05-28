@@ -3,9 +3,13 @@
 
 {% block section %}search-results{% endblock %}
 
-{% block after-tabs %}
+{% block left-slot-wrapper %}{% endblock %}
+{% block right-slot-wrapper %}{% endblock %}
+
+{% block content %}
+
     <ul class="breadcrumbs">
-        <li>{% trans 'You are here:' %}</li>
+        <li class="breadcrumbs-label">{% trans 'You are here:' %}</li>
         <li>
             <a href="{% url lfs_shop_view %}">
                 {% trans 'Home' %}</a>
@@ -13,41 +17,37 @@
         <li>
             &gt; {% trans 'Search results' %}
         </li>
-    </ul>    
-{% endblock %}
+    </ul>
 
-{% block left-slot-wrapper %}{% endblock %}
-{% block right-slot %}
-    {% topseller_portlet 5 %}
-    {% recent_products_portlet %}    
-{% endblock %}
+    <div style="position:relative; top:0">
+        <img src="{{ MEDIA_URL }}lfstheme/img/monkey.gif"
+         style="position: absolute; top: -67px; left: -80px; z-index:100"/>
+    </div>
 
-{% block content %}
-    
     <h1>{% trans 'Search results' %}</h1>
-    
-    <label for="search">{% trans 'Search' %}:</label>    
+
+    <label for="search">{% trans 'Search' %}:</label>
     <form action="{% url lfs_search %}"
           class="search">
-        <input id="search-input" 
-               type="text" 
+        <input id="search-input"
+               type="text"
                name="phrase" />
-               
-        <input type="submit" 
+
+        <input type="submit"
                value="{% trans 'Go!' %}">
     </form>
-    
+
     <p>
-        {% trans 'You searched for' %} <span class="search-results-phrase">"{{phrase}}"</span>.         
+        {% trans 'You searched for' %} <span class="search-results-phrase">"{{phrase}}"</span>.
         {% blocktrans count total as counter %}There has been found 1 product.{% plural %}There has been found {{ counter }} products.{% endblocktrans %}
     </p>
 
 
     {% if products %}
 
-        {% autopaginate products 10 %}        
+        {% autopaginate products 10 %}
         {% paginate %}
-        {% sorting %}        
+        {% sorting %}
 
         <table id="search-results" class="lfs-default">
             <tr>
@@ -62,40 +62,47 @@
                     <td>
                         <a href="{{product.get_absolute_url}}">
                             <img src="{{product.get_image.url_100x100}}"
-                                 alt="{{product.name}}" 
+                                 alt="{{product.name}}"
                                  title="{{product.name}}"
                                  height="100px" />
-                        </a>     
+                        </a>
                     </td>
                     <td class="text">
-                        <a href="{{product.get_absolute_url}}">                    
+                        <a href="{{product.get_absolute_url}}">
                             {{product.name}}
                         </a>
+                        {% for option in product.get_options %}
+                            {% if option.property.display_on_product %}
+                                <div>
+                                    {{option.property.name}} : {{option.value|option_name}} {{ option.property.unit|safe }}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
                     </td>
                     <td class="number">
                         <div class="product-price">
                             {% if product.for_sale %}
-                               <span class="for-sale-standard-price">{{product.price|currency}}</span>
-                               <span class="for-sale-price">{{product.for_sale_price|currency}}*</span>        
+                               <span class="for-sale-standard-price">{{product.get_standard_price|currency}}</span>
+                               <span class="for-sale-price">{{product.for_sale_price|currency}}*</span>
                             {% else %}
-                                <span class="standard-price">{{product.price|currency}}*</span>
+                                <span class="standard-price">{{product.get_price|currency}}*</span>
                             {% endif %}
                             <div class="price-disclaimer">
                                 *inkl. MwSt. zzgl. Versand
-                            </div>                                    
-                        </div>                    
+                            </div>
+                        </div>
 
                         <div class="details-button">
                             <a href="{% url lfs_product product.slug %}">
-                                <img src="{{ MEDIA_URL }}lfstheme/img/button_details.jpg" 
+                                <img src="{{ MEDIA_URL }}lfstheme/img/button_details.jpg"
                                      alt="{% trans 'Details' %}" />
-                            </a> 
+                            </a>
                         </div>
-                    
+
                     </td>
                 </tr>
             {% endfor %}
-        </table>            
+        </table>
     {% endif %}
 
 {% endblock %}
