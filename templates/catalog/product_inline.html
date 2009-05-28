@@ -5,124 +5,128 @@
 <form action="{% url lfs.catalog.views.product_form_dispatcher %}"
       method="post">
 
-    <div class="product-images">        
+    <div class="product-images">
         <div class="main-image">
-            <a href="{{variant.get_image.url_400x400}}"
+            <a href="{{ variant.get_image.url_400x400 }}"
                class="product-image">
-                <img src="{{variant.get_image.url_200x200}}"
-                     alt="{{variant.name}}" />
+                <img src="{{ variant.get_image.url_200x200 }}"
+                     alt="{{ variant.name}}" />
             </a>
-        </div>    
+        </div>
         <div class="sub-images">
             {% for image in variant.get_sub_images %}
-                <a href="{{image.image.url_400x400}}"
+                <a href="{{ image.image.url_400x400 }}"
                    class="product-image">
-                    <img src="{{image.image.url_60x60}}"
-                         title="{{image.title}}"
-                         alt="{{image.title}}" />
-                </a>         
+                    <img src="{{ image.image.url_60x60 }}"
+                         title="{{ image.title }}"
+                         alt="{{ image.title }}" />
+                </a>
             {% endfor %}
         </div>
     </div>
 
     <h1 class="product-title">
-        {{variant.get_name}}
+        {{ variant.get_name }}
     </h1>
-    
+
     {% shipping %}
-    
+
     {% average_for_instance variant %}
-    
+
     <div class="prices">
         {% if variant.for_sale %}
             <div>
-                <span class="for-sale-standard-price">{{variant.get_standard_price|currency}}*</span>
-                <span class="for-sale-price">{{variant.get_price|currency}}*</span>        
+                <span class="for-sale-standard-price">{{ variant.get_standard_price|currency }}*</span>
+                <span class="for-sale-price">{{ variant.get_price|currency }}*</span>
             </div>
             <div class="price-disclaimer">
                 *inkl. MwSt., zzgl. Versand
             </div>
         {% else %}
             <div class="standard-price">
-                {{variant.get_price|currency}}*
+                {{ variant.get_price|currency }}*
             </div>
             <div class="price-disclaimer">
                 *inkl. MwSt., zzgl. Versand
-            </div>            
+            </div>
         {% endif %}
 
     </div>
-    
+
     <div class="add-to-cart-button">
         {% if variant.deliverable %}
             <input type="submit"
                    name="add-to-cart"
-                   value="{% trans 'Add to cart' %}"/>               
-        
+                   value="{% trans 'Add to cart' %}"/>
+
         {% else %}
             <span class="not-deliverable">
                 {% trans 'Not deliverable' %}
-            </span>                   
+            </span>
         {% endif %}
     </div>
     <p class="product-description">
-        {{variant.get_description|safe}}
+        {{ variant.get_description|safe}}
     </p>
-    
-    {% ifequal product.sub_type "1" %}
-        <h2>{% trans 'Variants' %}</h2>
-        {% ifequal product.variants_display_type 0 %}
-            <table class="product-variants">
-                <tr>
-                    <th></th>
-                    <th>
-                        {% trans 'Name' %}
-                    </th>
-                    {% for property in properties %}
-                        <th>
-                            {{property.name}}
-                        </th>    
-                    {% endfor %}
-                    <th class="number">
-                        {% trans 'Price' %}
-                    </th>
-                </tr>
-                {% for product_variant in variants %}
+
+    <div class="variants">
+        {% ifequal product.sub_type "1" %}
+            <h1 class="accessories">{% trans 'Variants' %}</h1>
+
+            <p class="discreet">{% trans 'This product has several variants' %}:</p>
+            {% ifequal product.variants_display_type 0 %}
+                <table class="product-variants lfs-default">
                     <tr>
-                        <td>
-                            <input type="radio"
-                                   name="product_id"
-                                   value="{{product_variant.id}}"
-                                   onclick="window.location='{% url lfs.catalog.views.product_view product_variant.slug %}'"
-                                   {% ifequal product_variant.id variant.id %}checked="checked"{% endifequal %}  />
-                        </td>
-                        <td>
-                            {{product_variant.get_name}}
-                        </td>
-                        {% for option in product_variant.get_options %}
-                            <td>
-                                {{option.value}}
-                            </td>                            
+                        <th></th>
+                        <th>
+                            {% trans 'Name' %}
+                        </th>
+                        {% for property in properties %}
+                            <th>
+                                {{ property.name}}
+                            </th>
                         {% endfor %}
-                        <td class="number">
-                            {{product_variant.get_price|currency}}
-                        </td>
+                        <th class="number">
+                            {% trans 'Price' %}
+                        </th>
                     </tr>
-                {% endfor %}
-            </table>
-        {% endifequal %}
+                    {% for product_variant in variants %}
+                        <tr>
+                            <td>
+                                <input type="radio"
+                                       name="product_id"
+                                       value="{{ product_variant.id }}"
+                                       onclick="window.location='{% url lfs.catalog.views.product_view product_variant.slug %}'"
+                                       {% ifequal product_variant.id variant.id %}checked="checked"{% endifequal %}  />
+                            </td>
+                            <td>
+                                {{ product_variant.get_name }}
+                            </td>
+                            {% for option in product_variant.get_options %}
+                                <td>
+                                    {{ option.value|option_name }}
+                                </td>
+                            {% endfor %}
+                            <td class="number">
+                                {{ product_variant.get_price|currency }}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endifequal %}
+        </div>
 
         {% ifequal product.variants_display_type 1 %}
             <div>
                 {% for property in properties %}
                     <div>
-                        {{property.name}}
-                        <select name="property_{{property.id}}">
+                        {{ property.name }}
+                        <select name="property_{{ property.id }}">
                             {% for option in property.options %}
-                                <option value="{{option.id}}"
+                                <option value="{{ option.id }}"
                                         {% if option.selected %}selected="selected"{% endif %}>
-                                    {{option.name}}
-                                </option>                        
+                                    {{ option.name }}
+                                </option>
                             {% endfor %}
                         </select>
                     </div>
@@ -130,12 +134,12 @@
                 <input type="submit"
                        name="refresh-options"
                        value="{% trans 'Refresh options' %}"/>
-            </div>                       
+            </div>
 
         {% endifequal %}
 
     {% endifequal %}
-    
+
     {% if product_accessories %}
         <h1 class="accessories">{% trans 'Accessories' %}</h1>
         <p class="discreet">{% trans 'This products fit to the product' %}:</p>
@@ -151,36 +155,36 @@
                 <tr>
                     <td>
                         <input type="checkbox"
-                               name="accessory-{{product_accessory.accessory.id}}"/>
+                               name="accessory-{{ product_accessory.accessory.id }}"/>
                     </td>
                     <td>
-                        <a href="{{product_accessory.accessory.get_absolute_url}}">
-                            {{product_accessory.accessory.name}}                        
-                        </a>    
+                        <a href="{{ product_accessory.accessory.get_absolute_url }}">
+                            {{ product_accessory.accessory.name }}
+                        </a>
                     </td>
                     <td class="number">
                         <input type="hidden"
-                               name="quantity-{{product_accessory.accessory.id}}"
-                               value="{{product_accessory.quantity}}" />
-                        {{product_accessory.quantity|quantity}}
-                    </td>                    
-                    <td class="number">
-                        {{product_accessory.accessory.price|currency}}
+                               name="quantity-{{ product_accessory.accessory.id }}"
+                               value="{{ product_accessory.quantity }}" />
+                        {{ product_accessory.quantity|quantity }}
                     </td>
                     <td class="number">
-                        {{product_accessory.get_price|currency}}
+                        {{ product_accessory.accessory.price|currency }}
+                    </td>
+                    <td class="number">
+                        {{ product_accessory.get_price|currency }}
                     </td>
                 </tr>
             {% endfor %}
         </table>
     {% endif %}
-    
+
     <input type="hidden"
            name="product_id"
-           value="{{product.id}}" />
+           value="{{ product.id }}" />
 
     <input type="hidden"
            name="variant_id"
-           value="{{variant.id}}" />
-    
+           value="{{ variant.id }}" />
+
 </form>
