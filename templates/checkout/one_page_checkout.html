@@ -5,6 +5,10 @@
 {% block left-slot-wrapper %}{% endblock %}
 {% block right-slot-wrapper %}{% endblock %}
 
+{% block after-tabs %}
+    {% breadcrumbs _("Checkout") %}
+{% endblock %}
+
 {% block content %}
     <div>
         <form class="checkout-form" 

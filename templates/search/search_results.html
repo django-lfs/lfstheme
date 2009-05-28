@@ -6,18 +6,11 @@
 {% block left-slot-wrapper %}{% endblock %}
 {% block right-slot-wrapper %}{% endblock %}
 
-{% block content %}
+{% block after-tabs %}
+    {% breadcrumbs _("Search results") %}
+{% endblock %}
 
-    <ul class="breadcrumbs">
-        <li class="breadcrumbs-label">{% trans 'You are here:' %}</li>
-        <li>
-            <a href="{% url lfs_shop_view %}">
-                {% trans 'Home' %}</a>
-        </li>
-        <li>
-            &gt; {% trans 'Search results' %}
-        </li>
-    </ul>
+{% block content %}
 
     <div style="position:relative; top:0">
         <img src="{{ MEDIA_URL }}lfstheme/img/monkey.gif"

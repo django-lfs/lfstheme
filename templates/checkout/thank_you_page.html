@@ -6,6 +6,10 @@
 {% block left-slot-wrapper %}{% endblock %}
 {% block right-slot-wrapper %}{% endblock %}
 
+{% block after-tabs %}
+    {% breadcrumbs _("Thank you") %}
+{% endblock %}
+
 {% block content %}
     <h1>{% trans 'Thank you' %}</h1>
 {% endblock %}

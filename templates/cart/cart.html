@@ -1,20 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load lfs_tags %}
 
 {% block section %}cart without-padding{% endblock %}
 {% block left-slot-wrapper %}{% endblock %}
 {% block right-slot-wrapper %}{% endblock %}
 
-
 {% block after-tabs %}
-    <ul class="breadcrumbs">
-        <li>{% trans 'You are here:' %}</li>
-        <li>
-            <a href="{% url lfs_shop_view %}">
-                {% trans 'Home' %}</a>
-        </li>
-         &gt; {% trans 'Cart' %}
-    </ul>
+    {% breadcrumbs _('Cart') %}
 {% endblock %}
 
 {% block content %}

@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block after-tabs %}
+    {% breadcrumbs _("Checkout") %}
+{% endblock %}
+
 {% block content %}
     <div>
         {% trans 'There is nothing to checkout' %}

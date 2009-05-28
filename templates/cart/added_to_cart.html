@@ -6,17 +6,21 @@
 {% block left-slot-wrapper %}{% endblock %}
 {% block right-slot-wrapper %}{% endblock %}
 
+{% block after-tabs %}
+    {% breadcrumbs _("Added to cart") %}
+{% endblock %}
+
 {% block content %}
     {% if plural %}
         <h1>{% trans 'This products have been added to cart' %}</h1>
     {% else %}
         <h1>{% trans 'This product has been added to cart' %}</h1>
     {% endif %}
-    
+
     <div id="cart-items">
         {{cart_items}}
     </div>
-    
+
     {% if product_accessories %}
         <h3>{% trans 'Accessories' %}</h3>
         <table class="accessories lfs-default">
@@ -40,7 +44,7 @@
                     <td>
                         <a href="{{product_accessory.accessory.get_absolute_url}}">
                             {{product_accessory.accessory.name}}
-                        </a>                    
+                        </a>
                     </td>
                     <td class="number">
                         {{product_accessory.quantity|quantity}}
@@ -55,9 +59,9 @@
                         <a class="add-accessory-link"
                            href="{% url lfs_add_accessory_to_cart product_accessory.accessory.id product_accessory.quantity %}">Add</a>
                     </td>
-                </tr>    
+                </tr>
             {% endfor %}
-        </table>        
+        </table>
     {% endif %}
 
     <div class="buttons">
@@ -72,7 +76,7 @@
         <a href="{% url lfs_checkout_dispatcher %}">
            <img src="{{MEDIA_URL}}lfstheme/img/button_checkout.jpg"
                 alt="Checkout" />
-        </a>                       
+        </a>
     </div>
 
 {% endblock %}

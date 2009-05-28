@@ -3,20 +3,7 @@
 {% load lfs_tags %}
 
 {% block after-tabs %}
-    <ul class="breadcrumbs">
-        <li>{% trans 'You are here:' %}</li>
-        <li>
-            <a href="{% url lfs_shop_view %}">
-                {% trans 'Home' %}</a> &gt;
-        </li>
-        <li>
-            <a href="{% url lfs_pages %}">{% trans 'Information' %}</a>
-             &gt;
-        </li>
-        <li>
-            {{page.title}}
-        </li>
-    </ul>    
+    {% breadcrumbs page %}
 {% endblock %}
 
 {% block content %}

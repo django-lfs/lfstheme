@@ -4,6 +4,10 @@
 
 {% block right-slot-wrapper %}{% endblock %}
 
+{% block after-tabs %}
+    {% breadcrumbs _("Your orders") %}
+{% endblock %}
+
 {% block content %}
     <h1>{% trans 'Your orders' %}</h1>
 
